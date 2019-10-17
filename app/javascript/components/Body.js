@@ -6,6 +6,7 @@ class Body extends React.Component {
   constructor() {
     super();
     this.state = { tasks: [] };
+    this.removeTask = this.removeTask.bind(this)
   }
 
   componentDidMount() {
@@ -17,11 +18,29 @@ class Body extends React.Component {
     this.setState({ tasks: newState })
   }
 
+  handleDelete(id) {
+    $.ajax({
+      url: `/tasks/${id}`,
+      type: 'DELETE',
+      success: () => {
+        this.removeTask(id);
+      }
+    });
+  }
+
+  removeTask(id) {
+    const newTasks = this.state.tasks.filter((task) => {
+      return task.id != id;
+    });
+
+    this.setState({ tasks: newTasks });
+  }
+
   render () {
     return (
       <React.Fragment>
         <NewTask handleSubmit={this.handleSubmit.bind(this)} />
-        <AllTasks tasks={this.state.tasks} />
+        <AllTasks tasks={this.state.tasks} handleDelete={this.handleDelete}/>
       </React.Fragment>
     );
   }

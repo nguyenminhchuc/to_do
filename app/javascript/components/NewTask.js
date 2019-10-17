@@ -9,8 +9,8 @@ class NewTask extends React.Component {
       url: '/tasks',
       type: 'POST',
       data: { task: { name: name, details: details } },
-      success: (response) => {
-        this.props.handleSubmit({name: name, details: details, status: 0});
+      success: (task) => {
+        this.props.handleSubmit(task);
       }
     });
   }
