@@ -1,3 +1,4 @@
 class Task < ApplicationRecord
-  enum status: %w(finish progress close)
+  validates :name, presence: true
+  enum status: %w(news finish progress close)
 end
